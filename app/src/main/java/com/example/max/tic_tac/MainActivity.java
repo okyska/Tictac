@@ -14,14 +14,15 @@ public class MainActivity extends AppCompatActivity {
 
     int activePlayer = 0;
     int[] gameState={2, 2, 2, 2, 2, 2, 2, 2, 2};
-    int[][] winningPosition = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8},{0,4,8}, {2,4,6}};
+    int[][] winningPositions = {{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8},{0,4,8}, {2,4,6}};
     boolean gameActive = true;
     Button playAgainButton;
     TextView winnerTextView;
     public void dropIn(View view){
         ImageView counter = (ImageView)view;
         int tappedCounter = Integer.parseInt( counter.getTag().toString());
-        if(gameState[tappedCounter] == 2 && gameActive) {
+
+        if (gameState[tappedCounter] == 2 && gameActive) {
 
 
             gameState[tappedCounter] = activePlayer;
@@ -36,27 +37,38 @@ public class MainActivity extends AppCompatActivity {
 
             counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
 
-            for (int[] winningPosition : winningPosition) {
-                if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
-                   //Someone has won!
-                    gameActive =false;
+            for (int[] winningPosition : winningPositions) {
+
+
+                if (gameState[winningPosition[0]] == gameState[winningPosition[1]]
+                        && gameState[winningPosition[1]] == gameState[winningPosition[2]]
+                        && gameState[winningPosition[0]] != 2) {
+                    //Someone has won!
+                    gameActive = false;
                     String winner = "";
                     if (activePlayer == 1) {
                         winner = "Yellow";
                     } else {
                         winner = "Red";
                     }
+                    //No one has von!
 
 
                     winnerTextView.setText(winner + " has won!");
-                    playAgainButton.setVisibility(View.VISIBLE);
+
                     winnerTextView.setVisibility(View.VISIBLE);
                 }
+
+
             }
+
         }
+
+
+
     }
     public void playAgain(View view){
-        playAgainButton.setVisibility(View.INVISIBLE);
+
         winnerTextView.setVisibility(View.INVISIBLE);
 
         GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
